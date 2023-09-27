@@ -258,7 +258,7 @@ const SuccessPage=()=>{
     
     const giveResult=()=>{
 
-        if(presentCode===context.getCode ){
+        if(presentCode==context.getCode ){
             navigate('/success')
         }
         else{changeError(true)
