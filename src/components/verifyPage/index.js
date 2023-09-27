@@ -1,14 +1,13 @@
 
-import {BrowserRouter,Route,Routes} from 'react-router-dom';
-import {useState} from "react"
-import Context from './components/Context'
-// import logo from './logo.svg';
-import LoginPage from './components/loginPage';
-import VerifyPage  from './components/verifyPage';
-import Success from './components/successPage'
-import './App.css';
 
 
+import {useContext,useState,useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+
+import OtpInput from 'react-otp-input';
+import Context from '../Context'
+
+import './index.css'
 const countriesList=[{"country":"Afghanistan","code":"93","iso":"AF"},
 {"country":"Albania","code":"355","iso":"AL"},
 {"country":"Algeria","code":"213","iso":"DZ"},
@@ -250,32 +249,72 @@ const countriesList=[{"country":"Afghanistan","code":"93","iso":"AF"},
 {"country":"Zambia","code":"260","iso":"ZM"},
 {"country":"Zimbabwe","code":"263","iso":"ZW"}]
 
+const SuccessPage=()=>{
+    const context=useContext(Context)
+    const navigate=useNavigate()
+    const [presentCode,changePresentCode]=useState('')
+    const [showError, changeError]= useState(false)
+ 
+    
+    const giveResult=()=>{
+
+        if(presentCode===context.getCode ){
+            navigate('/success')
+        }
+        else{changeError(true)
+        }
+    }
+
+    const changeNumber=()=>{
+                context.changeCode("")
+                context.changePhoneNumber(countriesList[94].country)
+                context.changeCountry(countriesList[94].iso)
+                navigate('/')
+    }
+
+    useEffect(()=>{
+        
+        if(context.getCode!==""){
+        alert(context.getCode)
+        }
+        
+        },[context.getCode])
 
 
-const App=()=>{
-    const [country,changeCountry]=useState(countriesList[94].iso)
-    const [phoneNumber,changePhoneNumber]=useState("")
-    const [getCode,changeCode]=useState("")
-  
+    const sendCodeAgain=()=>{
+        const codeDetails=Math.floor(1000+ Math.random()*9000)
+        context.changeCode(codeDetails)
+    }
+
+
 return(
-  <div>
+    <div className="successBackground">
+        <img src="https://res.cloudinary.com/dprdrg8bk/image/upload/v1695761613/franck-sNvBTRQR7eE-unsplash_o0qikg.jpg"
+        className="image1" alt="Loading"/>
+        <h1 className="paragraph">Please verify your Mobile number</h1>
+        <p className="otpText">An OTP is sent to  +917896781234</p>
+        <button type='button' className="clickButton" onClick={changeNumber}>
+        <p className="changePhoneNumber" >Change Phone Number</p>
+        </button>
     
-    <Context.Provider value={{country,changeCountry,phoneNumber,changePhoneNumber,getCode,changeCode}}>
-     
-    <BrowserRouter>
-      <Routes>
-         <Route path="/" Component={LoginPage}/>
-         <Route path="/verify" Component={VerifyPage}/>
-         <Route path="/success" Component={Success} />
-         </Routes>
-    </BrowserRouter>
-    </Context.Provider>
 
+<OtpInput
+      
+      className="inputOtpDetails"
+      value={presentCode}
+      onChange={changePresentCode}
+      numInputs={4}
+      renderSeparator={<span>-</span>}
+      renderInput={(props) => <input {...props} />}
+    />
+
+    {showError && <p class="colorText">*The Entered OTP did not match</p>}
+        <div className="bottomText">
+        <p className="otpText" >Didn't receive the code? <span className="spanText" onClick={sendCodeAgain}>Resend</span></p>
+        <button className="requiredButtons" onClick={giveResult}>Verify</button>
+        </div>
     </div>
-    
 )
 }
 
-export default App;
-
-
+export default SuccessPage

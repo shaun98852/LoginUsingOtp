@@ -1,0 +1,115 @@
+
+.successBackground{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    max-width:480px;
+    margin:auto;
+    /* background-color:#FDECD1; */
+
+}
+
+.image1{
+    height:150px;
+    width:160px;
+    border-radius:50%;
+
+}
+
+.paragraph{
+    font-family:roboto;
+    color:#626363;
+    font-weight:450;
+    text-align: center;
+    font-size:20px;
+}
+
+.otpText{
+    font-family:roboto;
+    color:#626363;
+    font-weight:450;
+    
+}
+
+.paragraphs{
+    font-family:roboto;
+    color:#626363;
+    font-weight:450;
+
+}
+
+.changePhoneNumber{
+    font-family:Roboto;
+    color:#F9C676;
+    text-decoration: underline;
+    
+}
+
+.codeBox{
+    display:flex;
+    justify-content: center;
+
+}
+
+.inputBoxes{
+    width:100%;
+    margin:20px;
+    height:30px;
+    border-radius:5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+
+
+.spanText{
+    color:#F9c676;
+
+}
+
+.requiredButtons{
+    background-color:#F7B348;
+    border-radius:15px;
+    color:#ffffff;
+    border-style:none;
+    height:30px;
+    width:40%;
+    
+    
+}
+
+.bottomText{
+    margin-top:30%;
+    text-align:center;
+
+}
+
+
+.otpText{
+    font-family:roboto;
+    color:#626363;
+    font-weight:450;
+    
+}
+
+.colorText{
+    color:Red;
+    font-family:roboto;
+    text-align:center;
+    
+}
+
+
+.clickButton{
+    border-style:none;
+    background-color:transparent;
+
+}
+
+.inputOtpDetails{
+    background-color:blue;
+    
+}
+

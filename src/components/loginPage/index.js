@@ -1,13 +1,8 @@
 
-import {BrowserRouter,Route,Routes} from 'react-router-dom';
-import {useState} from "react"
-import Context from './components/Context'
-// import logo from './logo.svg';
-import LoginPage from './components/loginPage';
-import VerifyPage  from './components/verifyPage';
-import Success from './components/successPage'
-import './App.css';
-
+import {useContext} from "react"
+import { useNavigate} from 'react-router-dom'
+import Context from '../Context'
+import './index.css'
 
 const countriesList=[{"country":"Afghanistan","code":"93","iso":"AF"},
 {"country":"Albania","code":"355","iso":"AL"},
@@ -251,31 +246,42 @@ const countriesList=[{"country":"Afghanistan","code":"93","iso":"AF"},
 {"country":"Zimbabwe","code":"263","iso":"ZW"}]
 
 
-
-const App=()=>{
-    const [country,changeCountry]=useState(countriesList[94].iso)
-    const [phoneNumber,changePhoneNumber]=useState("")
-    const [getCode,changeCode]=useState("")
-  
-return(
-  <div>
-    
-    <Context.Provider value={{country,changeCountry,phoneNumber,changePhoneNumber,getCode,changeCode}}>
-     
-    <BrowserRouter>
-      <Routes>
-         <Route path="/" Component={LoginPage}/>
-         <Route path="/verify" Component={VerifyPage}/>
-         <Route path="/success" Component={Success} />
-         </Routes>
-    </BrowserRouter>
-    </Context.Provider>
-
-    </div>
-    
-)
+const LoginPage=()=>{
+const context=useContext(Context)
+const navigate=useNavigate()
+const codeChange=()=>{
+      const codeDetails=Math.floor(1000+ Math.random()*9000)
+      context.changeCode(codeDetails)
+       navigate('/verify')
+      
 }
 
-export default App;
+return(
+    <div className="background">
+        <h1 className="heading">Admit<span className="span">Kard</span></h1>
+        <h1 className="text">Welcome</h1>
+        <p className="para">Please sign in to your account</p>
 
+        <div className="inputSection">
+            <select className="selectBox" onChange={(e)=>{context.changeCountry(e.target.value)}} value={context.country}>
+                {
+                    
+                countriesList.map(eachItem=><option value={eachItem.iso} className="optionBox">
+                    <div className="details"><p>{eachItem.iso}</p> <p>{`+${eachItem.code}`}</p></div>
+                </option>)
+                }
+                
+            </select>
+            <input type="text" className="inputBox" value={context.phoneNumber} onChange={(f)=>{context.changePhoneNumber(f.target.value)}}/>
+        </div>
 
+        <p className="para">We will send you one time SMS message. <br/>
+                        Chares may apply.</p>
+
+       <button className="requiredButton" type="button" onClick={codeChange}>Sign in with OTP</button>
+       
+    </div>
+)
+
+            }
+export default LoginPage
